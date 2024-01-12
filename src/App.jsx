@@ -1,35 +1,34 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import React from "react";
+import { Renderer } from "@vivliostyle/react";
 import './App.sass'
 
-function App() {
-  const [count, setCount] = useState(0)
-
+const App = () => {
+  const [page, setPage] = React.useState(1);
+  
+  function next() {
+    setPage((page) => page + 1);
+  }
+  
+  function prev() {
+    setPage((page) => page - 1);
+  }
+  
+  function onLoad(state) {
+    console.log(state.epageCount, state.docTitle);
+  }
+  
+  const sample =
+    "https://vivliostyle.github.io/vivliostyle_doc/samples/gon/index.html";
+  
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="wrapper">
+      <Renderer source={sample} page={page} onLoad={onLoad} />
+      <div className="btns">
+        <button onClick={next}>Next</button>
+        <button onClick={prev}>Prev</button>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    </div>
+  );
+};
 
-export default App
+export default App;
