@@ -1,33 +1,37 @@
 import React from "react";
+import { useState } from "react";
 import { Renderer } from "@vivliostyle/react";
-import './App.sass'
+import Reader from "./components/Reader";
+import "./styles/App.sass";
 
 const App = () => {
-  const [page, setPage] = React.useState(1);
+  const [page, setPage] = useState(1);
   
-  function next() {
+  const sampleFromHTML = "https://vivliostyle.github.io/vivliostyle_doc/samples/gon/index.html";
+  // const sampleFromLOCAL = "./data/新美南吉 ごん狐.html";
+
+  const next = () => {
     setPage((page) => page + 1);
-  }
+  };
   
-  function prev() {
+  const prev = () => {
     setPage((page) => page - 1);
-  }
-  
+  };
+    
   function onLoad(state) {
     console.log(state.epageCount, state.docTitle);
   }
   
-  const sample =
-    "https://vivliostyle.github.io/vivliostyle_doc/samples/gon/index.html";
-  
   return (
-    <div className="wrapper">
-      <Renderer source={sample} page={page} onLoad={onLoad} />
-      <div className="btns">
-        <button onClick={next}>Next</button>
-        <button onClick={prev}>Prev</button>
-      </div>
-    </div>
+    <Reader 
+      Renderer={Renderer}
+      page={page}
+      sampleFromHTML={sampleFromHTML}
+      // sampleFromLOCAL={sampleFromLOCAL}
+      next={next}
+      prev={prev}
+      onLoad={onLoad}
+    />
   );
 };
 
